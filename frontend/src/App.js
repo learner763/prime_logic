@@ -151,6 +151,13 @@ function App() {
     }
   },[])
 
+  useEffect(()=>
+  {
+    set_fullname('')
+    set_email('')
+    set_password('')
+  },[login_menu])
+
   return (
     <>
       <div className="circle" style={{display:ready?'none':'flex'}}>    
@@ -190,7 +197,7 @@ function App() {
             <label style={{display:login_menu?'none':'flex'}}>Full Name</label>
             <input onChange={(e)=>set_fullname(e.target.value.replace(/[^a-zA-Z\_]/g, ""))} value={fullname} style={{display:login_menu?'none':'flex'}} placeholder='Akhta_Lava'></input>
             <label>Email</label>
-            <input onChange={(e)=>set_email(e.target.value.replace(/[^a-zA-Z0-9_@.]/g, ""))} value={email} placeholder='akhtarlava@gmail.com'></input>
+            <input onChange={(e)=>set_email(e.target.value.replace(/[^a-zA-Z0-9_@.+]/g, ""))} value={email} placeholder='akhtarlava@gmail.com'></input>
             <label>
               <span>Password</span>
               <span onClick={()=>forgot_password()} style={{cursor:'pointer',display:login_menu?'flex':'none'}}>Forgot Password?</span>
