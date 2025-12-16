@@ -3,6 +3,7 @@ from .forms import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from random import *
 from .models import *
@@ -312,6 +313,7 @@ def get_notes(request):
 '''
 def index(request):
     return render(request, "index.html")
+@csrf_exempt
 @api_view(['POST'])
 def event_registration(request):
     try:
@@ -325,7 +327,7 @@ def event_registration(request):
     except techfest_participants.DoesNotExist:
         return Response({'success':False,'message':'Your token inside browser was changed/removed.Now Please log in to access your account'})
 
-
+@csrf_exempt
 @api_view(['POST'])
 def handle_registration(request):
     need_auth=False
@@ -383,6 +385,7 @@ def handle_registration(request):
                 return Response({'success':True,'message':f"An OTP has been sent to {request.data['email']}",'email':person.email})
             except Exception as e:
                 return Response({'success':False,"message": f"{request.data['email']} is not a valid email address!"})
+@csrf_exempt
 @api_view(['POST'])
 def verify_otp(request):
     try:
@@ -395,6 +398,7 @@ def verify_otp(request):
     except techfest_participants.DoesNotExist:
         return Response({"success": False,'InvalidToken':'Your email inside browser was changed/removed.Now Please log in to access your account'})
     
+@csrf_exempt
 @api_view(['POST'])
 def my_registered_events(request):
     try:
@@ -404,6 +408,7 @@ def my_registered_events(request):
     except techfest_participants.DoesNotExist:
         return Response({'success':False,'message':'Your token inside browser was changed/removed.Now Please log in to access your account'})
 
+@csrf_exempt
 @api_view(['POST'])
 def remember_me(request):
     person=''
@@ -428,6 +433,7 @@ def elara(request):
     return render(request, "elara.html")
 def elara_info(request):
     return render(request, "elara_info.html")
+@csrf_exempt
 @api_view(['POST'])
 def forgot_password(request):
     print(request)
