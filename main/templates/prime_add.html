@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Contractors</title>
+</head>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{%load static%}
+
+<style>
+    .parent{
+        display: flex;
+        min-height: 100dvh;
+    }
+    body{
+        margin: 0;
+        font-family: 'Inter';
+    }
+    .side_bar{
+        padding: 0px 20px 0px 20px;
+        display: flex;
+        flex-direction: column;
+        background-color: blue;
+        color: white;
+    }
+    .side_bar ul{
+        display: flex;
+        flex-direction:column;
+        padding:0;
+        gap: 25px;
+        height: 100dvh;
+        margin: 0;
+    }
+    .side_bar ul li{
+        list-style: none;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+    .side_bar ul li i{
+        margin-right: 5px;
+    }
+    .side_bar img{
+        width: 160px;
+        margin-top: 20px;
+        margin-bottom: 35px;
+    }
+    .info{
+        display:flex;
+        flex:1;
+        flex-direction: column;
+        background-color: whitesmoke;
+        padding: 0px 20px;
+        height: 100dvh;
+        overflow-y: scroll;
+    }
+    .header{
+        padding: 21px 0px;
+        display:flex;
+        align-items: center;
+        border-style: solid;
+        border-width: 0px 0px 1px 0px;
+    }
+    .header label:first-of-type{
+        font-size: 20px;
+        color: darkblue;
+        font-weight: bold;
+    }
+    .header div label:first-of-type{
+        font-size: 16px;
+    }
+    .header div label:nth-of-type(2){
+        font-size: 14px;
+    }
+    #Contractor_Registration_label
+    {
+        font-size: 18px;
+        color:darkblue;
+        font-weight: bold;
+    }
+    .form{
+        padding: 10px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+    }
+    .info_labels{
+        padding: 10px;
+        background:linear-gradient(to right,blue,darkblue);
+        font-size: 18px;
+        color: white;
+        border-radius: 5px;
+    }
+    .personal_data,.location,.services,.preferences{
+        display:flex;
+        margin: 20px 0px;
+        gap: 10px;
+    }
+    .personal_data div,.location div,.services div,.preferences div{
+        display: flex;
+        flex-direction:column;
+        flex: 1;
+    }
+    .personal_data div label,.location div label{
+        font-size: 16px;
+        color: black;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .personal_data div input,.location div select{
+        color: black;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 16px;
+        border: none;
+        background-color: skyblue;
+        margin-bottom: 10px;
+    }
+    .location div select{
+        margin-bottom: 0;
+    }
+    .services div,.preferences div{
+        gap: 20px;
+        font-weight: bold;
+    }
+    .services input,.preferences input{
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .personal_data div input:last-of-type{
+        height:120px;
+        margin-bottom: 0;
+    }
+    select,button{
+        cursor: pointer;
+    }
+    .terms{
+        margin:20px 0px 0px 0px;
+        font-weight: bold;
+    }
+    .buttons{
+        display:flex;
+        margin-top:20px;
+        margin-left:auto;
+        gap:5px;
+        margin-bottom: 40px;
+    }
+    .buttons button{
+        padding:10px 30px;
+        color: white;
+        font-weight:bold;    
+        border-radius: 10px;
+        border:none;
+        width:100px;
+    }
+    .buttons button:last-of-type{
+        background: linear-gradient(to right,blue,darkblue);
+    }
+    .buttons button:first-of-type{
+        background-color: darkblue;
+    }
+</style>
+<body>
+    <dialog id="dialog" style="border: none;background-color: white;border-radius: 30px;"></dialog>
+    <div class='parent'>
+        <div class="side_bar">
+            <ul>
+                <img src="{% static 'prime.png' %}">
+                <li><i class="fa-solid fa-gauge"></i> Dashboard</li>
+                <li style='font-weight:bold'><i class="fa-solid fa-robot"></i> AI Assistant</li>
+                <li><i class="fa-solid fa-users"></i> Customers</li>
+                <li><i class="fa-solid fa-user-gear"></i> Subcontractors</li>
+                <li><i class="fa-solid fa-cart-shopping"></i> Orders</li>
+                <li><i class="fa-solid fa-briefcase"></i> Jobs</li>
+                <li><i class="fa-solid fa-gear"></i> Settings</li>
+                <li style="margin-top:auto;margin-bottom:25px"><i class="fa-solid fa-right-from-bracket"></i> Logout</li>
+            </ul>
+        </div>
+        <div class="info">
+            <div class="header">
+                <label>Contractor</label>
+                <img style="margin-left: auto;margin-right: 5px;" src="{% static 'Ellipse 8.png' %}">
+                <div style="display: flex;flex-direction: column;">
+                    <label style="font-weight: bold;color: darkblue;">Umer Aftab</label>
+                    <label style="color:black">umeraftab763@gmail.com</label>
+
+                </div>
+            </div>
+            <label style="margin-top: 10px;margin-bottom: 10px;font-weight: bold;"><i style="margin-right: 5px;" class="fas fa-solid fa-arrow-left"></i>Back</label>
+            <label id="Contractor_Registration_label">Contractor Registration</label>
+            <label style="margin-top: 5px;margin-bottom: 10px;">Please fill the fields below for subcontractor registration.</label>
+            <div class="form">
+                <label style="display: flex;align-items: center;" class="info_labels">Personal & Company Information<i style="margin-left: auto;" class="fa-solid fa-minus"></i></label>
+                    
+                <div class='personal_data'>
+                    <div>
+                        <label>Full Name *</label>
+                        <input id="fullname" placeholder="Full Name">
+                        <label>Email Address *</label>
+                        <input id="email" placeholder="Email Address">
+                        <label>General Liability Insurance *</label>
+                        <input id='liability' accept="image/*" type="file">
+                    </div>
+                    <div>
+                        <label>Business Name *</label>
+                        <input id="businessname" placeholder="Business Name">
+                        <label>Password *</label>
+                        <input id="password" placeholder="Password">
+                        <label>Workman's Comp Insurance *</label>
+                        <input accept="image/*" id="workman" type="file">
+
+
+                    </div>
+                    <div>
+                        <label>Phone Number *</label>
+                        <input id="phone" type="text" placeholder="03456731340">
+                        <label>Confirm Password *</label>
+                        <input id="confirmpassword" placeholder="Confirm Password">
+                        <label>Business/License Tax Receipt *</label>
+                        <input accept="image/*" id="tax" type="file" placeholder="s">
+
+                    </div>
+
+                </div>
+                <label style="display: flex;align-items: center;" class="info_labels">Service Location & Status<i style="margin-left: auto;" class="fa-solid fa-minus"></i></label>
+                <div class="location">
+                    <div>
+                        <label>City *</label>
+                        <select id="city">
+                            <option value="select">Select City</option>
+                            <option value="Lahore">Lahore</option>
+                            <option value="Karachi">Karachi</option>
+                            <option value="Islamabad">Islamabad</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Area you serve *</label>
+                        <select id='area'>
+                            <option value="select">Select Area</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Status *</label>
+                        <select id='status'>
+                            <option value="Pending">Pending</option>
+                            <option value="Verified">Verified</option>
+                            <option value="Suspended">Suspended</option>
+                        </select>
+                    </div>
+                </div>
+                <label style="display: flex;align-items: center;" class="info_labels">Services You Provide*(Select at least one)*<i style="margin-left: auto;" class="fa-solid fa-minus"></i></label>
+                <div class='services'>
+                    <div>
+                        <label><input type="checkbox"> Residential Projects</label>
+                        <label><input type="checkbox"> WallPaper Removal</label>
+                        <label><input type="checkbox"> Epoxy Floor Installation</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Commercial Projects</label>
+                        <label><input type="checkbox"> Skimming</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Interior Painting</label>
+                        <label><input type="checkbox"> Drywall Repair</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Exterior Painting</label>
+                        <label><input type="checkbox"> Stucco Repair</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Cabinets</label>
+                        <label><input type="checkbox"> Paver Sealing</label>
+                    </div>
+                </div>
+                <label style="display: flex;align-items: center;" class="info_labels">Work Preferences<i style="margin-left: auto;" class="fa-solid fa-minus"></i></label>
+                <div class='preferences'>
+                    <div>
+                        <label><input type="checkbox"> Monday</label>
+                        <label><input type="checkbox"> Saturday</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Tuesday</label>
+                        <label><input type="checkbox"> Sunday</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Wednesday</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Thursday</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox"> Friday</label>
+                    </div>
+                </div>
+                <label style="display: flex;align-items: center;" class="info_labels">Terms & Conditions<i style="margin-left: auto;" class="fa-solid fa-minus"></i></label>
+                <label class="terms"><input type="checkbox"> I confirm that the information provided is accurate*</label>
+                <label class="terms"><input type="checkbox"> I agree to Prime Logic's Terms & Conditions and Code of Conduct*</label>
+                <div class="buttons">
+                    <button id="cancel">Cancel</button>
+                    <button id="save">Save</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        for(let i=0;i<document.querySelectorAll('input[type="checkbox"]').length;i++) 
+        {
+            document.querySelectorAll('input[type="checkbox"]')[i].addEventListener('change', function() {
+            if (this.checked) {
+                console.log(this.checked)
+            } else {
+                console.log(this.checked)
+            }
+        });
+        }
+        let dialog=document.getElementById('dialog')
+        let email=document.getElementById('email')
+        let password=document.getElementById('password')
+        let fullname=document.getElementById('fullname')
+        let confirmpassword=document.getElementById('confirmpassword')
+        let businessname=document.getElementById('businessname')
+        let phone=document.getElementById('phone')
+        let save=document.getElementById('save')
+        let workman=document.getElementById('workman')
+        let liability=document.getElementById('liability')
+        let tax=document.getElementById('tax')
+        let status=document.getElementById('status')
+
+
+        console.log(getComputedStyle(tax).height)
+        workman.addEventListener('change',()=>
+        {
+            if(workman.files[0].type.startsWith('image/'))
+            {
+                
+            }
+            else{
+                workman.value=''
+            }
+        })
+        tax.addEventListener('change',()=>
+        {
+            if(tax.files[0].type.startsWith('image/'))
+            {
+                
+            }
+            else{
+                tax.value=''
+            }
+        })
+        liability.addEventListener('change',()=>
+        {
+            if(liability.files[0].type.startsWith('image/'))
+            {
+                
+            }
+            else{
+                liability.value=''
+            }
+        })
+        save.addEventListener('click',()=>
+        {
+            if(email.value.length===0 || password.value.length===0 || fullname.value.length===0 || confirmpassword.value.length===0 || businessname.value.length===0 
+                && email.value.length>30 || password.value.length>12 || fullname.value.length>12 || confirmpassword.value.length>12 || businessname.value.length>30 )
+            {
+                dialog.innerHTML=''
+                let div=document.createElement('div')
+                div.style.display='flex'
+                div.style.flexDirection='column'
+                div.style.backgroundColor='white'
+
+                let label1=document.createElement('label')
+                label1.innerHTML='Input Fields Issue'
+                label1.style.fontSize='20px'
+                label1.style.fontWeight='bold'
+                label1.style.marginBottom='10px'
+                label1.style.color='darkblue'
+                let label2=document.createElement('label')
+                label2.innerHTML='Email,Business length:1-30,Password,Fullname length:1-12,Fullname length:1-12'
+                label2.style.fontSize='16px'
+                label2.style.color='black'
+                label2.style.marginBottom='30px'
+                let close=document.createElement('button')
+                close.innerHTML='Close'
+                close.style.color='white'
+                close.style.fontWeight='bold'
+                close.style.fontSize='16px'
+                close.style.borderRadius='10px'
+                close.style.width='100px'
+                close.style.border='none'
+                close.style.padding='10px 0px'
+                close.style.background='linear-gradient(to right, blue, darkblue)'
+                close.addEventListener('click',()=>
+                {
+                    dialog.close()
+                })
+                div.appendChild(label1)
+                div.appendChild(label2)
+                div.appendChild(close)
+                dialog.append(div)
+                dialog.showModal()
+            }
+            else if(phone.value.length!==11)
+            {
+                dialog.innerHTML=''
+                let div=document.createElement('div')
+                div.style.display='flex'
+                div.style.flexDirection='column'
+                div.style.backgroundColor='white'
+
+                let label1=document.createElement('label')
+                label1.innerHTML='Phone Number Issue'
+                label1.style.fontSize='20px'
+                label1.style.fontWeight='bold'
+                label1.style.marginBottom='10px'
+                label1.style.color='darkblue'
+                let label2=document.createElement('label')
+                label2.innerHTML='Phone Number length:11'
+                label2.style.fontSize='16px'
+                label2.style.color='black'
+                label2.style.marginBottom='30px'
+                let close=document.createElement('button')
+                close.innerHTML='Close'
+                close.style.color='white'
+                close.style.fontWeight='bold'
+                close.style.fontSize='16px'
+                close.style.borderRadius='10px'
+                close.style.width='100px'
+                close.style.border='none'
+                close.style.padding='10px 0px'
+                close.style.background='linear-gradient(to right, blue, darkblue)'
+                close.addEventListener('click',()=>
+                {
+                    dialog.close()
+                })
+                div.appendChild(label1)
+                div.appendChild(label2)
+                div.appendChild(close)
+                dialog.append(div)
+                dialog.showModal()
+            }
+            else if(password.value!==confirmpassword.value)
+            {
+                dialog.innerHTML=''
+                let div=document.createElement('div')
+                div.style.display='flex'
+                div.style.flexDirection='column'
+                div.style.backgroundColor='white'
+
+                let label1=document.createElement('label')
+                label1.innerHTML='Password Mismatch Issue'
+                label1.style.fontSize='20px'
+                label1.style.fontWeight='bold'
+                label1.style.marginBottom='10px'
+                label1.style.color='darkblue'
+                let label2=document.createElement('label')
+                label2.innerHTML='Password and Confirm Password should be same'
+                label2.style.fontSize='16px'
+                label2.style.color='black'
+                label2.style.marginBottom='30px'
+                let close=document.createElement('button')
+                close.innerHTML='Close'
+                close.style.color='white'
+                close.style.fontWeight='bold'
+                close.style.fontSize='16px'
+                close.style.borderRadius='10px'
+                close.style.width='100px'
+                close.style.border='none'
+                close.style.padding='10px 0px'
+                close.style.background='linear-gradient(to right, blue, darkblue)'
+                close.addEventListener('click',()=>
+                {
+                    dialog.close()
+                })
+                div.appendChild(label1)
+                div.appendChild(label2)
+                div.appendChild(close)
+                dialog.append(div)
+                dialog.showModal()
+            }
+            else if(!email.value.includes('@') || !email.value.includes('.') || email.value.split('@')[0].length===0 || email.value.split('@')[1].length===0 || email.value.split('@')[1].split('.')[0].length===0 || email.value.split('@')[1].split('.')[1].length===0 || !email.value.endsWith('.com'))
+            {
+                dialog.innerHTML=''
+                let div=document.createElement('div')
+                div.style.display='flex'
+                div.style.flexDirection='column'
+                div.style.backgroundColor='white'
+
+                let label1=document.createElement('label')
+                label1.innerHTML='Email Format Issue'
+                label1.style.fontSize='20px'
+                label1.style.fontWeight='bold'
+                label1.style.marginBottom='10px'
+                label1.style.color='darkblue'
+                let label2=document.createElement('label')
+                label2.innerHTML='Correct Email Format: you@gmail.com'
+                label2.style.fontSize='16px'
+                label2.style.color='black'
+                label2.style.marginBottom='30px'
+                let close=document.createElement('button')
+                close.innerHTML='Close'
+                close.style.color='white'
+                close.style.fontWeight='bold'
+                close.style.fontSize='16px'
+                close.style.borderRadius='10px'
+                close.style.width='100px'
+                close.style.border='none'
+                close.style.padding='10px 0px'
+                close.style.background='linear-gradient(to right, blue, darkblue)'
+                close.addEventListener('click',()=>
+                {
+                    dialog.close()
+                })
+                div.appendChild(label1)
+                div.appendChild(label2)
+                div.appendChild(close)
+                dialog.append(div)
+                dialog.showModal()
+            }
+            else{
+                let check_count_1=0
+                let check_count_2=0
+                let check_count_3=0
+                let services=[]
+                let preferences=[]
+                for(let i=0;i<document.querySelectorAll('.services input').length;i++)
+                {
+                    if(document.querySelectorAll('.services input')[i].checked)
+                    {
+                        check_count_1+=1
+                        services.push(document.querySelectorAll('.services label')[i].innerText)
+                    }
+                }
+                if(check_count_1===0)
+                {
+                }
+                else{
+                    for(let i=0;i<document.querySelectorAll('.preferences input').length;i++)
+                    {
+                        if(document.querySelectorAll('.preferences input')[i].checked)
+                        {
+                            check_count_2+=1
+                            preferences.push(document.querySelectorAll('.preferences label')[i].innerText)
+                        }
+                    }
+                    if(check_count_2===0)
+                    {
+                    }
+                    else{
+                        for(let i=0;i<document.querySelectorAll('.terms input').length;i++)
+                        {
+                            console.log(document.querySelectorAll('.terms input')[i].checked)
+                            if(document.querySelectorAll('.terms input')[i].checked)
+                            {
+                                check_count_3+=1
+                            }
+                        }
+                    }
+                }
+                if(check_count_1>0 && check_count_2>0 && check_count_3===2 && workman.value!=='' && tax.value!=='' && liability.value!=='')
+                {
+                    fetch('/prime_add/add_contractor',{
+                        method:'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body:JSON.stringify({
+                            email:email.value,
+                            password:password.value,
+                            fullname:fullname.value,
+                            phone:phone.value,
+                            businessname:businessname.value,
+                            city:document.querySelectorAll('.location select')[0].value,
+                            area:document.querySelectorAll('.location select')[1].value,
+                            services:services,
+                            preferences:preferences,
+                            date:new Date().toISOString(),
+                            edit:false,
+                            status:status.value
+                        })
+                    })
+                    
+                    .then(responce=>responce.json())
+                    .then(data=>
+                    {
+                        if(data.success)
+                        {
+                            let form=new FormData()
+                            form.append('image_workman',workman.files[0])
+                            form.append('image_tax',tax.files[0])
+                            form.append('image_liability',liability.files[0])
+                            form.append('email',email.value)
+                            fetch('/prime_add/upload_img',{
+                                method:'POST',
+                                body:form
+                            })
+                            .then(res=>res.json())
+                            .then(data=>
+                            {
+                                if(data.success)
+                                {
+                                    window.location.href='/prime_view'
+                                }
+                            }
+                            )
+                        }
+                    }
+                    )
+                }
+                else{
+                    dialog.innerHTML=''
+                    let div=document.createElement('div')
+                    div.style.display='flex'
+                    div.style.flexDirection='column'
+                    div.style.backgroundColor='white'
+
+                    let label1=document.createElement('label')
+                    label1.innerHTML='Non Selection Issue'
+                    label1.style.fontSize='20px'
+                    label1.style.fontWeight='bold'
+                    label1.style.marginBottom='10px'
+                    label1.style.color='darkblue'
+                    let label2=document.createElement('label')
+                    label2.innerHTML='Select at least one in each services,preferences and accept terms & conditions and input all images in Fields.'
+                    label2.style.fontSize='16px'
+                    label2.style.color='black'
+                    label2.style.marginBottom='30px'
+                    let close=document.createElement('button')
+                    close.innerHTML='Close'
+                    close.style.color='white'
+                    close.style.fontWeight='bold'
+                    close.style.fontSize='16px'
+                    close.style.borderRadius='10px'
+                    close.style.width='100px'
+                    close.style.border='none'
+                    close.style.padding='10px 0px'
+                    close.style.background='linear-gradient(to right, blue, darkblue)'
+                    close.addEventListener('click',()=>
+                    {
+                        dialog.close()
+                    })
+                    div.appendChild(label1)
+                    div.appendChild(label2)
+                    div.appendChild(close)
+                    dialog.append(div)
+                    dialog.showModal()
+                }
+                
+            }
+            
+        })
+        let cancel=document.getElementById('cancel')
+        cancel.addEventListener('click',()=>
+        {
+            window.location.href='/prime_view'
+
+            
+        })
+
+    </script>
+</body>
+</html>

@@ -1,1 +1,2 @@
-let r=3===2?
+let r=['v','s','v','s','p']
+// order in this 'v','s','p'
