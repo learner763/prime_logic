@@ -68,7 +68,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         scrollbar-width: none;
     }
     .header label:first-of-type{
-        font-size: 18px;
+        font-size: 20px;
         color: darkblue;
         font-weight: bold;
         margin-right: 20px;
@@ -139,13 +139,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         border-style: solid;
         padding: 10px 0px;
         gap: 20px;
-        overflow: scroll;
-        scrollbar-width: none;
+        width: fit-content;
     }
     .form div label{
         min-width: 185px;
         overflow: scroll;
         scrollbar-width: none;
+    }
+    .form div label:first-of-type{
+        min-width: 240px;
     }
     .form div input{
         min-width: 37px;
@@ -176,9 +178,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         .side_bar{
             width: 0;
             padding: 0;
+            display: none;
         }
         .info{
-            padding: 10px;
+            padding:0px 10px;
         }
         .second_bar label:first-of-type{
             display: none;
@@ -215,7 +218,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         </div>
         <div class="info">
             <div class="header">
-                <button style="background-color: white;color: darkblue;border: 1px darkblue solid;border-radius: 5px;margin-right: 5px;display: none;"><i class="fa-solid fa-bars" ></i></button>
+                <button  style="background-color: white;color: darkblue;border: 1px darkblue solid;border-radius: 5px;margin-right: 5px;display: none;"><i class="fa-solid fa-bars" ></i></button>
                 <label>Contractors</label>
                 <img style="margin-left: auto;margin-right: 5px;" src="{% static 'you.png' %}">
                 <div style="display: flex;flex-direction: column;">
@@ -225,7 +228,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                 </div>
             </div>
             <div class="second_bar" >
-                <label ><i style="margin-right: 5px;" class="fas fa-solid fa-arrow-left"></i>Back</label>
+                <label  ><i style="margin-right: 5px;" class="fas fa-solid fa-arrow-left"></i>Back</label>
                 <select id="filter" style="margin-left: auto;margin-right: 10px;">
                     <option value="filter"> Filter By </option>
                     <option value="name"> Name </option>
@@ -270,12 +273,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
             document.getElementsByClassName('side_bar')[0].style.position='fixed'
             document.getElementsByClassName('side_bar')[0].style.padding='0px 20px'
         })
-        document.getElementsByClassName('side_bar')[0].addEventListener('click',()=>
+        document.addEventListener('click',(e)=>
         {
-            if(window.innerWidth<900)
+            if(e.target!==side_bar_button && e.target!==document.querySelectorAll('.header i')[0] && window.innerWidth<901 && getComputedStyle(document.getElementsByClassName('side_bar')[0]).display==='flex')
             {
-                document.getElementsByClassName('side_bar')[0].style.display='none'
+                document.getElementsByClassName('side_bar')[0].style.display='none'                
             }
+
         })
         window.addEventListener('resize',()=>
         {
@@ -289,9 +293,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                 side_bar_button.style.display='block'
                 document.getElementsByClassName('side_bar')[0].style.position='fixed'
                 document.getElementsByClassName('side_bar')[0].style.display='none'
-
-
-
             }
         })
         fetch('/prime_view/all_contractors')

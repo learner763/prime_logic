@@ -55,13 +55,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         padding: 0px 20px;
         height: 100dvh;
         overflow-y: scroll;
+        scrollbar-width: none;
     }
     .header{
-        padding: 21px 0px;
+        padding: 39px 0px;
         display:flex;
         align-items: center;
         border-style: solid;
         border-width: 0px 0px 1px 0px;
+        width:100%;
+        overflow:scroll;
+        scrollbar-width:none;
     }
     .header label:first-of-type{
         font-size: 20px;
@@ -72,7 +76,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         font-size: 16px;
     }
     .header div label:nth-of-type(2){
-        font-size: 14px;
+        font-size: 12px;
     }
     #Contractor_Registration_label
     {
@@ -98,10 +102,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         margin: 20px 0px;
         gap: 10px;
     }
+    .personal_data,.location{
+        flex-wrap:wrap;
+    }
+    .services,.preferences{
+        width:100%;
+        overflow:scroll;
+        scrollbar-width:none;
+    }
     .personal_data div,.location div,.services div,.preferences div{
         display: flex;
         flex-direction:column;
         flex: 1;
+        width:100%;
     }
     .personal_data div label,.location div label{
         font-size: 16px;
@@ -161,7 +174,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     .buttons button:first-of-type{
         background-color: darkblue;
     }
-    
     .loader{
         display: flex;
         height: 100dvh;
@@ -176,12 +188,26 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         height: 50px;
         animation: spin 1s linear infinite;
     }
-    .personal_data img{
-        width: 460px;
-        height: 120px;
-    }
     @keyframes spin{
         to{transform: rotate(360deg);}
+    }
+    @media(max-width:900px)
+    {
+        .side_bar{
+            width: 0;
+            padding: 0;
+            display: none;
+        }
+        .info{
+            padding:0px 10px;
+        }
+        
+        #Contractor_Registration_label{
+            margin-top: 10px;
+        }
+        .header button{
+            display: block !important;
+        }
     }
 </style>
 <body>
@@ -204,6 +230,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         </div>
         <div class="info">
             <div class="header">
+                <button  style="background-color: white;color: darkblue;border: 1px darkblue solid;border-radius: 5px;margin-right: 5px;display: none;"><i class="fa-solid fa-bars" ></i></button>
                 <label>Contractor</label>
                 <img style="margin-left: auto;margin-right: 5px;" src="{% static 'you.png' %}">
                 <div style="display: flex;flex-direction: column;">
@@ -212,7 +239,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
                 </div>
             </div>
-            <label style="margin-top: 10px;margin-bottom: 10px;font-weight: bold;"><i style="margin-right: 5px;" class="fas fa-solid fa-arrow-left"></i>Back</label>
+            <label onclick="window.location.href='/prime_view'" style="cursor:pointer;margin-top: 10px;margin-bottom: 10px;font-weight: bold;"><i style="margin-right: 5px;" class="fas fa-solid fa-arrow-left"></i>Back</label>
             <label id="Contractor_Registration_label">Contractor Registration</label>
             <label style="margin-top: 5px;margin-bottom: 10px;">Please fill the fields below for subcontractor registration.</label>
             <div class="form">
@@ -251,7 +278,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                     </div>
 
                 </div>
-                <label style="display: flex;align-items: center;" class="info_labels">Service Location<i style="margin-left: auto;" class="fa-solid fa-minus"></i></label>
+                <label style="display: flex;align-items: center;" class="info_labels">Service Location & Status<i style="margin-left: auto;" class="fa-solid fa-minus"></i></label>
                 <div class="location">
                     <div>
                         <label>City *</label>
@@ -263,9 +290,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                         </select>
                     </div>
                     <div>
-                        <label>Area you serve *</label>
+                        <label>Area *</label>
                         <select id='area'>
                             <option value="select">Select Area</option>
+                            <option value="blockA">Block A</option>
+                            <option value="blockB">Block B</option>
+                            <option value="blockC">Block C</option>
                         </select>
                     </div>
                     <div>
@@ -335,6 +365,36 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
     </div>
     <script>
+        let side_bar_button=document.querySelectorAll('.header button')[0]
+        side_bar_button.addEventListener('click',()=>
+        {
+            document.getElementsByClassName('side_bar')[0].style.display='flex'
+            document.getElementsByClassName('side_bar')[0].style.width='160px'
+            document.getElementsByClassName('side_bar')[0].style.position='fixed'
+            document.getElementsByClassName('side_bar')[0].style.padding='0px 20px'
+        })
+        document.addEventListener('click',(e)=>
+        {
+            if(e.target!==side_bar_button && e.target!==document.querySelectorAll('.header i')[0] && window.innerWidth<901 && getComputedStyle(document.getElementsByClassName('side_bar')[0]).display==='flex')
+            {
+                document.getElementsByClassName('side_bar')[0].style.display='none'                
+            }
+
+        })
+        window.addEventListener('resize',()=>
+        {
+            if(window.innerWidth>900)
+            {
+                document.getElementsByClassName('side_bar')[0].style.position='static'
+                document.getElementsByClassName('side_bar')[0].style.display='flex'
+                side_bar_button.style.display='none'
+            }
+            else{
+                side_bar_button.style.display='block'
+                document.getElementsByClassName('side_bar')[0].style.position='fixed'
+                document.getElementsByClassName('side_bar')[0].style.display='none'
+            }
+        })
         let img_workman_input=document.getElementById('img_workman_input')
         let img_tax_input=document.getElementById('img_tax_input')
         let img_liability_input=document.getElementById('img_liability_input')
