@@ -235,7 +235,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         .then(responce=>responce.json())
         .then(data=>
             {
-                console.log(data.user_data)
                 let filter=document.getElementById('filter')
                 filter.addEventListener('change',()=>{
                     if(filter.value==='name')
@@ -245,7 +244,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                         users.splice(0,1)
                         users.sort((a,b)=>a.children[1].textContent.localeCompare(b.children[1].textContent))
                         data.user_data.sort((a,b)=>a.fullname.localeCompare(b.fullname))
-                        console.log(users)
                         document.getElementsByClassName('form')[0].appendChild(document.getElementsByClassName('icons')[0])
                         for(let i=0;i<users.length;i++)
                         {
@@ -254,8 +252,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                     }
                     else if(filter.value==='date')
                     {
-                        console.log((data.user_data))
-
                         let users=document.getElementsByClassName('form')[0]
                         users=Array.from(users.children)
                         users.splice(0,1)
@@ -265,7 +261,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                             {
                                 if(new Date (data.user_data[j+1].date)>new Date(data.user_data[j].date))
                                 {
-                                    console.log(new Date (data.user_data[j+1].date),new Date(data.user_data[j].date))
                                     let temp=users[j]
                                     users[j]=users[j+1]
                                     users[j+1]=temp
@@ -287,7 +282,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                         users.splice(0,1)
                         users.sort((a,b)=>a.children[4].textContent.localeCompare(b.children[4].textContent))
                         data.user_data.sort((a,b)=>a.status.localeCompare(b.status))
-                        console.log(users)
                         document.getElementsByClassName('form')[0].appendChild(document.getElementsByClassName('icons')[0])
                         for(let i=0;i<users.length;i++)
                         {
@@ -345,7 +339,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                         label1.style.marginBottom='10px'
                         label1.style.color='darkblue'
                         div1.appendChild(label1)
-                        console.log(user_data[person])
                         let keys=['Email','Fullname','Phone','Business','Date Registered','Password','City','Area','Services','Preferences']
                         for(let i=0;i<10;i++)
                         {
@@ -452,11 +445,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                     div.appendChild(jobs)
                     div.appendChild(date)
                     div.appendChild(actions)
-                    document.getElementsByClassName('form')[0].appendChild(div)
-                    console.log(getComputedStyle(services).width)
-                    console.log(getComputedStyle(name).width)
-                    
-
+                    document.getElementsByClassName('form')[0].appendChild(div)   
                 }
                 document.getElementsByClassName('parent')[0].style.display='flex'
                 document.getElementsByClassName('loader')[0].style.display='none'

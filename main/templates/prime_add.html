@@ -310,9 +310,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         {
             document.querySelectorAll('input[type="checkbox"]')[i].addEventListener('change', function() {
             if (this.checked) {
-                console.log(this.checked)
             } else {
-                console.log(this.checked)
             }
         });
         }
@@ -330,7 +328,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         let status=document.getElementById('status')
 
 
-        console.log(getComputedStyle(tax).height)
         workman.addEventListener('change',()=>
         {
             if(workman.files[0].type.startsWith('image/'))
@@ -552,7 +549,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                     else{
                         for(let i=0;i<document.querySelectorAll('.terms input').length;i++)
                         {
-                            console.log(document.querySelectorAll('.terms input')[i].checked)
                             if(document.querySelectorAll('.terms input')[i].checked)
                             {
                                 check_count_3+=1
@@ -586,7 +582,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                     .then(responce=>responce.json())
                     .then(data=>
                     {
-                        console.log(data)
                         if(data.success)
                         {
                             let form=new FormData()
