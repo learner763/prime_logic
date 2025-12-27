@@ -25,6 +25,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         flex-direction: column;
         background-color: blue;
         color: white;
+        width: 160px;
     }
     .side_bar ul{
         display: flex;
@@ -62,17 +63,21 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         align-items: center;
         border-style: solid;
         border-width: 0px 0px 1px 0px;
+        width: 100%;
+        overflow: scroll;
+        scrollbar-width: none;
     }
     .header label:first-of-type{
-        font-size: 20px;
+        font-size: 18px;
         color: darkblue;
         font-weight: bold;
+        margin-right: 20px;
     }
     .header div label:first-of-type{
         font-size: 16px;
     }
     .header div label:nth-of-type(2){
-        font-size: 14px;
+        font-size: 12px;
     }
     #Contractor_Registration_label
     {
@@ -84,6 +89,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         background-color: white;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        overflow: scroll;
+        scrollbar-width: none;
     }
     .info_labels{
         padding: 10px;
@@ -92,16 +100,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         color: white;
         border-radius: 5px;
     }
-    
-    
     select,button{
         cursor: pointer;
     }
-    
-    
     .second_bar{
         display: flex;
         margin-top: 10px;
+        width: 100%;
+        overflow: scroll;
+        scrollbar-width: none;
     }
     .second_bar select:first-of-type,.second_bar button:nth-of-type(1)
     {
@@ -131,16 +138,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         border-width: 0px 0px 1px 0px;
         border-style: solid;
         padding: 10px 0px;
+        gap: 20px;
+        overflow: scroll;
+        scrollbar-width: none;
     }
     .form div label{
-        flex: 1;
+        min-width: 185px;
+        overflow: scroll;
+        scrollbar-width: none;
     }
     .form div input{
-        flex: .2;
+        min-width: 37px;
         margin-left: 20px;
-    }
-    .form div label:first-of-type{
-        flex: 1.3;
     }
     .form div label:last-of-type{
         margin-right: 20px;
@@ -161,6 +170,28 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     }
     @keyframes spin{
         to{transform: rotate(360deg);}
+    }
+    @media(max-width:900px)
+    {
+        .side_bar{
+            width: 0;
+            padding: 0;
+        }
+        .info{
+            padding: 10px;
+        }
+        .second_bar label:first-of-type{
+            display: none;
+        }
+        .second_bar button,.second_bar select{
+            padding: 5px !important;
+        }
+        #Contractor_Registration_label{
+            margin-top: 10px;
+        }
+        .header button{
+            display: block !important;
+        }
     }
 </style>
 <body>
@@ -184,7 +215,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         </div>
         <div class="info">
             <div class="header">
-                <label>Contractor</label>
+                <button style="background-color: white;color: darkblue;border: 1px darkblue solid;border-radius: 5px;margin-right: 5px;display: none;"><i class="fa-solid fa-bars" ></i></button>
+                <label>Contractors</label>
                 <img style="margin-left: auto;margin-right: 5px;" src="{% static 'you.png' %}">
                 <div style="display: flex;flex-direction: column;">
                     <label style="font-weight: bold;color: darkblue;">Umer Aftab</label>
@@ -201,7 +233,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                     <option value="status"> Status </option>
 
                 </select>
-                <button style="margin-right: 10px;"><label id="date"></label>  <i class="fa-solid fa-calendar"></i></button>
+                <button style="margin-right: 10px;"><label id="date" style="display: block;"></label>  <i class="fa-solid fa-calendar"></i></button>
                 <button onclick="window.location.href='/prime_add'">Register Contractor <i class="fa-solid fa-user-plus"></i></button>
             </div>
             <label id="Contractor_Registration_label">Contractor List</label>
@@ -230,7 +262,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         document.getElementById('date').innerHTML = new Date().toLocaleDateString()
         document.getElementsByClassName('parent')[0].style.display='none'
         document.getElementsByClassName('loader')[0].style.display='flex'
+        let side_bar_button=document.querySelectorAll('.header button')[0]
+        side_bar_button.addEventListener('click',()=>
+        {
+            document.getElementsByClassName('side_bar')[0].style.display='flex'
+            document.getElementsByClassName('side_bar')[0].style.width='160px'
+            document.getElementsByClassName('side_bar')[0].style.position='fixed'
+            document.getElementsByClassName('side_bar')[0].style.padding='0px 20px'
+        })
+        document.getElementsByClassName('side_bar')[0].addEventListener('click',()=>
+        {
+            if(window.innerWidth<900)
+            {
+                document.getElementsByClassName('side_bar')[0].style.display='none'
+            }
+        })
+        window.addEventListener('resize',()=>
+        {
+            if(window.innerWidth>900)
+            {
+                document.getElementsByClassName('side_bar')[0].style.position='static'
+                document.getElementsByClassName('side_bar')[0].style.display='flex'
+                side_bar_button.style.display='none'
+            }
+            else{
+                side_bar_button.style.display='block'
+                document.getElementsByClassName('side_bar')[0].style.position='fixed'
+                document.getElementsByClassName('side_bar')[0].style.display='none'
 
+
+
+            }
+        })
         fetch('/prime_view/all_contractors')
         .then(responce=>responce.json())
         .then(data=>
