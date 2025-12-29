@@ -7,6 +7,8 @@ from django.http import HttpResponse,JsonResponse
 from random import *
 from .models import *
 from django.conf import settings
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 import os, time
 
 def index(request):
@@ -20,10 +22,14 @@ def prime_view(request):
 @api_view(['POST'])
 def add_contractor(request):
     if(request.data['edit'])==False:
+        try:
+            validate_email(request.data['email'])
+        except ValidationError:
+            return Response({'success':False,'message':'Correct Email Format : you@domain.tld','issue':'Email Format'})
         if(len(list(personal_info.objects.filter(email=request.data['email']))))>0:
-            return Response({'success':False,'message':'Contractor with this email already exists'})
+            return Response({'success':False,'message':'Contractor with this email already exists','issue':'Duplicate Email'})
         elif len(list(personal_info.objects.filter(fullname=request.data['fullname'])))>0:
-            return Response({'success':False,'message':'Contractor with this name already exists'})
+            return Response({'success':False,'message':'Contractor with this name already exists','issue':'Duplicate Name'})
         else:
             person=personal_info.objects.create(status=request.data['status'],email=request.data['email'],fullname=request.data['fullname'],phone=request.data['phone'],businessname=request.data['businessname'],password=request.data['password'],date=request.data['date'])
             person=location.objects.create(city=request.data['city'],area=request.data['area'],email=request.data['email'])

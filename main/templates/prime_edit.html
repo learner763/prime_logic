@@ -365,6 +365,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
     </div>
     <script>
+        let inputs=document.getElementsByTagName('input')
+        let indices=[0,1,3,4,6,7]
+        for(let i=0;i<indices.length;i++)
+        {
+            inputs[indices[i]].addEventListener('input',(e)=>
+            {
+                e.target.value=e.target.value.replace(/[^a-zA-Z0-9@._+]/g,'')
+            })
+        }
+        inputs[6].addEventListener('input',(e)=>
+        {
+            e.target.value=e.target.value.replace(/[^0-9]/g,'')
+        })
         let side_bar_button=document.querySelectorAll('.header button')[0]
         side_bar_button.addEventListener('click',()=>
         {
@@ -636,45 +649,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                         dialog.append(div)
                         dialog.showModal()
                     }
-                    else if(email.value.split('@')[0].length===0 || email.value.split('@')[1].length===0 || email.value.split('@')[1].split('.')[0].length===0 || email.value.split('@')[1].split('.')[1].length===0 || !email.value.endsWith('.com'))
-                    {
-                        dialog.innerHTML=''
-                        let div=document.createElement('div')
-                        div.style.display='flex'
-                        div.style.flexDirection='column'
-                        div.style.backgroundColor='white'
-
-                        let label1=document.createElement('label')
-                        label1.innerHTML='Email Format Issue'
-                        label1.style.fontSize='20px'
-                        label1.style.fontWeight='bold'
-                        label1.style.marginBottom='10px'
-                        label1.style.color='darkblue'
-                        let label2=document.createElement('label')
-                        label2.innerHTML='Correct Email Format: you@gmail.com'
-                        label2.style.fontSize='16px'
-                        label2.style.color='black'
-                        label2.style.marginBottom='30px'
-                        let close=document.createElement('button')
-                        close.innerHTML='Close'
-                        close.style.color='white'
-                        close.style.fontWeight='bold'
-                        close.style.fontSize='16px'
-                        close.style.borderRadius='10px'
-                        close.style.width='100px'
-                        close.style.border='none'
-                        close.style.padding='10px 0px'
-                        close.style.background='linear-gradient(to right, blue, darkblue)'
-                        close.addEventListener('click',()=>
-                        {
-                            dialog.close()
-                        })
-                        div.appendChild(label1)
-                        div.appendChild(label2)
-                        div.appendChild(close)
-                        dialog.append(div)
-                        dialog.showModal()
-                    }
+                    
                     else{
                         let check_count_1=0
                         let check_count_2=0
